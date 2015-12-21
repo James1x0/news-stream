@@ -16,6 +16,13 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    nytimesApi: {
+      basePath: 'http://api.nytimes.com/svc/news/v3/content/',
+      apiKeys: {
+        newswire: '723e07ebec88142f95be19826b2a5c0e:10:73825458'
+      }
     }
   };
 

@@ -30,19 +30,16 @@ export default Ember.Service.extend({
     apiUrl += '&limit=' + this.get('limit');
 
     let currentPoll = Ember.$.getJSON(apiUrl).then(response => {
-      this.store.push(this.store.normalize({
-        data: response.results.map(result => {
-          result.id = result.url;
-          result.type = 'news';
-          return result;
-        })
-      }));
+      this.store.push('news', this.store.normalize('news', response.results.map(result => {
+        result.id = result.url;
+        return result;
+      })));
     }).fail(err => {
       this.send('pollError', err);
     });
 
-    this.set('__currentPoll', currentPoll);
-    Ember.run.later(this, this.__poll, this.get('pollEvery'));
+    this.set('__currentPollFetch', currentPoll);
+    this.set('__nextPoll', Ember.run.later(this, this.__poll, this.get('pollEvery')));
   },
 
   willDestroy () {

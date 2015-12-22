@@ -24,18 +24,17 @@ export default Ember.Service.extend({
   },
 
   __poll () {
+    const store = this.get('store');
+
     let apiUrl = timesApi.basePath + this.get('source') + '/';
     apiUrl += this.get('section') + '/' + this.get('time');
     apiUrl += '.json?api-key=' + timesApi.apiKeys.newswire;
     apiUrl += '&limit=' + this.get('limit');
 
     let currentPoll = Ember.$.getJSON(apiUrl).then(response => {
-      this.store.push('news', this.store.normalize('news', response.results.map(result => {
-        result.id = result.url;
-        return result;
-      })));
+      store.pushPayload('article', { article: response.results });
     }).fail(err => {
-      this.send('pollError', err);
+      this.set('pollError', err);
     });
 
     this.set('__currentPollFetch', currentPoll);

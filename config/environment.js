@@ -19,9 +19,9 @@ module.exports = function(environment) {
     },
 
     nytimesApi: {
-      basePath: 'http://api.nytimes.com/svc/news/v3/content/',
+      basePath: '/svc/news/v3/content/',
       apiKeys: {
-        newswire: '723e07ebec88142f95be19826b2a5c0e:10:73825458'
+        newswire: 'aacb207043586b6f28f0a235d0fccd58:1:73825458'
       }
     }
   };
